@@ -7,22 +7,24 @@
  */
 void push(stack_t **stack, unsigned int line_number)
 {
-	char *arg = strtok(NULL, " \t\n");
+	int j;
+	char *endptr;
 
-	stack_t *new_node = malloc(sizeof(stack_t));
-
-	if (arg == NULL || new_node == NULL)
+	if (!vglo.arg)
 	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
+		dprintf(2, "L%u: usage: push integer\n", line_number);
+		free_vglo();
 		exit(EXIT_FAILURE);
 	}
-
-	new_node->n = atoi(arg);
-	new_node->prev = NULL;
-	new_node->next = *stack;
-
-	if (*stack)
-		(*stack)->prev = new_node;
-
-	*stack = new_node;
+	j = strtol(vglo.arg, &endptr, 10);
+	if (*endptr != '\0')
+	{
+		dprintf(2, "L%u: usage: push integer\n", line_number);
+		free_vglo();
+		exit(EXIT_FAILURE);
+	}
+	if (vglo.lifo == 1)
+		add_dnodeint(stack, j);
+	else
+		add_dnodeint_end(stack, j);
 }

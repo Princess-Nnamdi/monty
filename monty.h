@@ -6,6 +6,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <ctype.h>
+#include <stddef.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -21,8 +26,45 @@ typedef struct stack_s
 	int n;
 	struct stack_s *prev;
 	struct stack_s *next;
-	int is_queue;
 } stack_t;
+
+/**
+ * struct dlistint_s - doubly linked list
+ * @n: integer
+ * @prev: points to the previous node
+ * @next: points to the next node
+ *
+ * Description: doubly linked list node structure
+ * for dlistint_t
+ */
+typedef struct dlistint_s
+{
+    int n;
+    struct dlistint_s *prev;
+    struct dlistint_s *next;
+} dlistint_t;
+
+/**
+ * struct globals - global structure to use in the functions
+ * @lifo: is stack or queue
+ * @cont: current line
+ * @arg: second parameter inside the current line
+ * @head: doubly linked list
+ * @fd: file descriptor
+ * @buffer: input text
+ *
+ * Description: doubly linked list node structure
+ * for stack, queues, LIFO, FIFO Holberton project
+ */
+typedef struct globals
+{
+	int lifo;
+	unsigned int cont;
+	char  *arg;
+	stack_t *head;
+	FILE *fd;
+	char *buffer;
+} global_t;
 
 /**
  * struct instruction_s - opcode and its function
@@ -38,6 +80,8 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+extern global_t vglo;
+
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
@@ -48,4 +92,9 @@ int parse_line(char *line, stack_t **stack, unsigned int line_number);
 void free_stack(stack_t *stack);
 void queue_function(stack_t **stack, unsigned int line_number);
 void stack_function(stack_t **stack, unsigned int line_number);
+
+void free_dlistint(dlistint_t *head);
+dlistint_t *add_dnodeint(dlistint_t **head, const int n);
+dlistint_t *add_dnodeint_end(dlistint_t **head, const int n);
+void free_vglo(void);
 #endif

@@ -8,12 +8,8 @@
 
 void stack_function(stack_t **stack, unsigned int line_number)
 {
-	stack_t *curr = *stack;
-
+	(void)stack;
 	(void)line_number;
-	while (curr)
-	{
-		curr->is_queue = 0;
-		curr = curr->next;
-	}
+
+	vglo.lifo = 1;
 }

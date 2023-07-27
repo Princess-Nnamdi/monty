@@ -6,6 +6,20 @@
  * argv: array of arguements
  **/
 
+global_t vglo;
+
+/**
+ * free_vglo - frees the global variables
+ *
+ * Return: no return
+ */
+void free_vglo(void)
+{
+	free_dlistint(vglo.head);
+	free(vglo.buffer);
+	fclose(vglo.fd);
+}
+
 #define MAX_LINE_LENGTH 1024
 int main(int argc, char *argv[])
 {

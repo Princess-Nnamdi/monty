@@ -46,4 +46,6 @@ void swap(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
 int parse_line(char *line, stack_t **stack, unsigned int line_number);
 void free_stack(stack_t *stack);
+void queue_function(stack_t **stack, unsigned int line_number);
+void stack_function(stack_t **stack, unsigned int line_number);
 #endif

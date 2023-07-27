@@ -28,21 +28,6 @@ typedef struct stack_s
 	struct stack_s *next;
 } stack_t;
 
-/**
- * struct dlistint_s - doubly linked list
- * @n: integer
- * @prev: points to the previous node
- * @next: points to the next node
- *
- * Description: doubly linked list node structure
- * for dlistint_t
- */
-typedef struct dlistint_s
-{
-    int n;
-    struct dlistint_s *prev;
-    struct dlistint_s *next;
-} dlistint_t;
 
 /**
  * struct globals - global structure to use in the functions
@@ -93,8 +78,8 @@ void free_stack(stack_t *stack);
 void queue_function(stack_t **stack, unsigned int line_number);
 void stack_function(stack_t **stack, unsigned int line_number);
 
-void free_dlistint(dlistint_t *head);
-dlistint_t *add_dnodeint(dlistint_t **head, const int n);
-dlistint_t *add_dnodeint_end(dlistint_t **head, const int n);
+stack_t *add_dnodeint_end(stack_t **head, const int n);
+stack_t *add_dnodeint(stack_t **head, const int n);
+void free_dlistint(stack_t *head);
 void free_vglo(void);
 #endif

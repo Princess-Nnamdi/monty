@@ -1,82 +1,86 @@
 #include "monty.h"
 
 /**
- * add_dnodeint_end - Adds a new node at the end of a dlistint_t list.
+ * add_dnodeint_end - Adds a new node at the end of a doubly linked list.
  * @head: Pointer to the head of the linked list.
  * @n: Integer value to be added to the new node.
- * Return: Address of the new element, or NULL if it failed.
- **/
-
-dlistint_t *add_dnodeint_end(dlistint_t **head, const int n)
+ *Return: a doubly linked list
+ */
+stack_t *add_dnodeint_end(stack_t **head, const int n)
 {
-	dlistint_t *new_node = malloc(sizeof(dlistint_t));
+	stack_t *temp, *aux;
 
-	if (new_node == NULL)
+	if (head == NULL)
 		return (NULL);
-
-	new_node->n = n;
-	new_node->next = NULL;
-
+	temp = malloc(sizeof(stack_t));
+	if (!temp)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		free_vglo();
+		exit(EXIT_FAILURE);
+	}
+	temp->n = n;
 	if (*head == NULL)
 	{
-		new_node->prev = NULL;
-		*head = new_node;
+		temp->next = *head;
+		temp->prev = NULL;
+		*head = temp;
+		return (*head);
 	}
-	else
-	{
-		dlistint_t *last_node = *head;
-
-		while (last_node->next != NULL)
-			last_node = last_node->next;
-
-		last_node->next = new_node;
-		new_node->prev = last_node;
-	}
-	return (new_node);
+	aux = *head;
+	while (aux->next)
+		aux = aux->next;
+	temp->next = aux->next;
+	temp->prev = aux;
+	aux->next = temp;
+	return (aux->next);
 }
 
-
-
 /**
- * *add_dnodeint - Adds a new node at the beginning of a dlistint_t list.
+ * add_dnodeint - Adds a new node at the beginning of a doubly linked list.
  * @head: Pointer to the head of the linked list.
  * @n: Integer value to be added to the new node.
- * Return: Address of the new element, or NULL if it failed.
- **/
-
-dlistint_t *add_dnodeint(dlistint_t **head, const int n)
+ *Return: a doubly linked list
+ */
+stack_t *add_dnodeint(stack_t **head, const int n)
 {
-	dlistint_t *new_node = malloc(sizeof(dlistint_t));
+	stack_t *temp;
 
-	if (new_node == NULL)
+	if (head == NULL)
 		return (NULL);
-
-	new_node->n = n;
-	new_node->prev = NULL;
-	new_node->next = *head;
-
-	if (*head)
-		(*head)->prev = new_node;
-
-	*head = new_node;
-
-	return (new_node);
+	temp = malloc(sizeof(stack_t));
+	if (!temp)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		free_vglo();
+		exit(EXIT_FAILURE);
+	}
+	temp->n = n;
+	if (*head == NULL)
+	{
+		temp->next = *head;
+		temp->prev = NULL;
+		*head = temp;
+		return (*head);
+	}
+	(*head)->prev = temp;
+	temp->next = (*head);
+	temp->prev = NULL;
+	*head = temp;
+	return (*head);
 }
 
-
 /**
- * free_dlistint - Frees a dlistint_t list.
- * @head: Pointer to the head of the linked list.
+ * free_dlistint - frees the doubly linked list
+ * @head: head of the list
  */
-
-void free_dlistint(dlistint_t *head)
+void free_dlistint(stack_t *head)
 {
-	dlistint_t *temp;
+	stack_t *tmp;
 
-	while (head)
+	while ((tmp = head) != NULL)
 	{
-		temp = head;
 		head = head->next;
-		free(temp);
+		free(tmp);
 	}
 }

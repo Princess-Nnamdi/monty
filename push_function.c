@@ -12,14 +12,14 @@ void push(stack_t **stack, unsigned int line_number)
 
 	if (!vglo.arg)
 	{
-		dprintf(2, "L%u: usage: push integer\n", line_number);
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
 		free_vglo();
 		exit(EXIT_FAILURE);
 	}
 	j = strtol(vglo.arg, &endptr, 10);
 	if (*endptr != '\0')
 	{
-		dprintf(2, "L%u: usage: push integer\n", line_number);
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
 		free_vglo();
 		exit(EXIT_FAILURE);
 	}

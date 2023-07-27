@@ -21,6 +21,7 @@ typedef struct stack_s
 	int n;
 	struct stack_s *prev;
 	struct stack_s *next;
+	int is_queue;
 } stack_t;
 
 /**
